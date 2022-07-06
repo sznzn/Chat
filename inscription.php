@@ -15,8 +15,19 @@ if(isset($_POST["inscription"])&&(!empty($_POST["pseudo"]))){
     $requete = $bdd->prepare($sql);
     $onparle = $requete->execute(array($pseudo, $ville, $age, $sex));
     if($onparle){
-        
-        header("Location: chat.php");
+        //需要修改的 怎么显示$id 
+        $sql="SELECT MAX(id) FROM chat";
+        var_dump($sql);
+        echo "fonctionne!";
+        //$id = $bdd->query($sql);
+        $requete = $bdd->prepare($sql);
+        $requete->execute();
+        $newone = $requete->fetch();
+        $_SESSION["id"] = $newone["id"];
+        $_SESSION["pseudo"] = $pseudo;
+        echo $_SESSION["id"] ;
+        //header("Location: chat.php");
+        //需要修改的
     }else{
         echo "erreur que l'on ne connaît pas";
     }
