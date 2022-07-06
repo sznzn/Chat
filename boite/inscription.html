@@ -13,7 +13,7 @@
     <main class="container">
         <h1 class="text-center mt-3 shadow-lg p-3 mb-5 bg-body rounded">Chat chat chat! Comme here!</h1>
         <div class="w-50 mx-auto">
-            <form method="GET" action="">
+            <form method="POST" action="inscription.php">
                 <div class="mb-3">
                     <label for="pseudo" class="form-label">Pseudo</label>
                     <input type="text" class="form-control" id="pseudo" aria-describedby="pseudo" name="pseudo">
@@ -30,19 +30,19 @@
 
                 <div class="row">
                     <div class="form-check col-6">
-                        <input class="form-check-input" type="radio" name="sex" id="sexfemme">
+                        <input class="form-check-input" type="radio" name="sex" id="sexfemme" value="1">
                         <label class="form-check-label" for="sexfemme">
                             Femme
                         </label>
                     </div>
                     <div class="form-check mb-3 col-6">
-                        <input class="form-check-input" type="radio" name="sex" id="sexhomme">
+                        <input class="form-check-input" type="radio" name="sex" id="sexhomme" value="0">
                         <label class="form-check-label" for="sexhomme">
                             Homme
                         </label>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary mb-3">Submit</button>
+                <button type="submit" class="btn btn-primary mb-3" name="inscription">Submit</button>
             </form>
         </div>
     </main>
