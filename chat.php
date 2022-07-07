@@ -45,7 +45,7 @@ if(session_id()!= NULL){
         $requete = $bdd->prepare($sql);
         $requete->execute();
         //需要修改的
-        header("Location:inscription.php");
+        header("Location:deconnexion.php");
     }
     
     
