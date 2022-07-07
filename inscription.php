@@ -16,18 +16,19 @@ if(isset($_POST["inscription"])&&(!empty($_POST["pseudo"]))){
     $onparle = $requete->execute(array($pseudo, $ville, $age, $sex));
     if($onparle){
         //需要修改的 怎么显示$id 
-        $sql="SELECT MAX(id) FROM chat";
-        var_dump($sql);
-        echo "fonctionne!";
-        //$id = $bdd->query($sql);
-        $requete = $bdd->prepare($sql);
-        $requete->execute();
-        $newone = $requete->fetch();
-        $_SESSION["id"] = $newone["id"];
+    
+        $sql="SELECT id FROM chat ";
+        $requete= $bdd->query($sql);
+
+        foreach($requete as $row){
+            //echo $row['id']," ";
+           // echo "<br>";
+            //$row['id'] est int(33) 最后一个id数
+        };
+        $_SESSION["id"] = $row['id'];
         $_SESSION["pseudo"] = $pseudo;
-        echo $_SESSION["id"] ;
-        //header("Location: chat.php");
-        //需要修改的
+        //echo $row['id'];
+        header("Location: chat.php");
     }else{
         echo "erreur que l'on ne connaît pas";
     }

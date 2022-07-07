@@ -25,7 +25,7 @@ include_once "header.php";
                 <button class="nav-link" aria-current="pseudo" name="personne" ><?php echo "Bienvenu! ".$_SESSION["pseudo"]; ?></button>
             </li>
             <li class="nav-item border border-warning">
-                <a class="nav-link" href="chat.php?action=deconnexion&id=<?php echo $_SESSION['id'];?>">deconnexion</a>
+                <a class="nav-link" href="chat.php?action=deconnexion&id=<?=$_SESSION['id'];?>">deconnexion</a>
             </li>
         </ul>
     </header>
@@ -37,8 +37,9 @@ include_once "header.php";
 <?php
 
 if(session_id()!= NULL){
-//需要修改的 1get为什么未definie 2为什么删除不掉
-    if ( $_GET['action']=="deconnexion") {
+//需要修改的 1get为什么未definie
+//因为没有isset 有了它就会识别
+    if ( isset($_GET['action'])&&$_GET['action']=="deconnexion") {
         // ... code déconnexion...
         $sql = "DELETE FROM chat WHERE id = ".$_SESSION['id'];
         $requete = $bdd->prepare($sql);
