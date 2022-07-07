@@ -31,7 +31,7 @@ include_once "header.php";
     </header>
 
 
-    <main class="container">
+    <main class="container" >
         <div class="row">
             <div class="col-4 bg-warning">
 <?php
@@ -65,23 +65,64 @@ if(session_id()!= NULL){
     $pseudos = $requete->fetchAll();
     
     foreach($pseudos as $p){
-        echo "<br><button>".$p["pseudo"]."</button>";
+        echo "<br><button class='btn btn-secondary mb-1'>".$p["pseudo"]."</button>";
         
     }
 }
         
 ?>
-            </div>
+        </div>
             <div class="col-8 bg-secondary">
                 l'écran pour se parler
+                <div class="w-100 h-75 bg-light mb-3 overflow-auto">
+                    <?php
+                    $sql = "SELECT * FROM mymessage";
+                    $requete = $bdd->prepare($sql);
+                    $allmsg=$requete->execute();
+                    if($allmsg){
+                        echo "on commence!";
+                    $allmsg=$requete= $bdd->query($sql);   
+                    foreach($allmsg as $chqmsg){
+                        
+                        echo "<p>".$chqmsg["nom"]." : ". $chqmsg["msg"]." : ".$chqmsg["time_message"]."</p> ";
+                        
+                    }
+                }
+                    ?>
+                </div>
+                <form action="" method="POST">
+                    <div class="w-100 h-10 row justify-content-around">
+                    
+                        <input  class="col-8  bg-light" type="text" name="msg" placeholder="parler ici">
+                    
+                        <button type="submit" class="col-2 btn btn-warning" name="envoyer">
+                        envoyer
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </main>
 </body>
 </html>
-
-
 <?php
+if(isset($_POST["envoyer"])&&(!empty($_POST["msg"]))){
+    
+    $nom = $_SESSION["pseudo"];
+    $msg = htmlspecialchars($_POST["msg"]);
+    $sql = "INSERT INTO mymessage(nom, msg, time_message) VALUES(?, ?, NOW())";
+    $requete = $bdd->prepare($sql);
+    $notreMsg=$requete->execute(array($nom, $msg));
+    
+    if($notreMsg){
+        echo "envoyé";  
+        header("Location: chat.php");
+        }else{
+            echo "problème";
+        }
+
+}
+?>
 
 
 
