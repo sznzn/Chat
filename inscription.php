@@ -5,32 +5,40 @@ include_once "header.php";
 
 
 //si on clique bouton pour submit des données
-if(isset($_POST["inscription"])&&(!empty($_POST["pseudo"]))){
+if(isset($_POST["inscription"])){
+
+    
+    // Contrôles
+    // &&(!empty($_POST["pseudo"]))&&(isset($_POST["sex"]))
+
+
     $pseudo=$_POST["pseudo"];
     $ville=$_POST["ville"];
     $age=$_POST["age"];
     $sex=$_POST["sex"];
 
-    $sql = "INSERT INTO chat(pseudo, ville, age, sex) VALUES(?,?,?,?)";
-    $requete = $bdd->prepare($sql);
-    $onparle = $requete->execute(array($pseudo, $ville, $age, $sex));
-    if($onparle){
-        //需要修改的 怎么显示$id 
-    
-        $sql="SELECT id FROM chat ";
-        $requete= $bdd->query($sql);
+    try {
+        $sql = "INSERT INTO chat(pseudo, ville, age, sex) VALUES(?,?,?,?)";
+        $requete = $bdd->prepare($sql);
+        $onparle = $requete->execute(array($pseudo, $ville, $age, $sex));
+        if($onparle){
+            //需要修改的 怎么显示$id 
+        
+            $sql="SELECT id FROM chat ";
+            $requete= $bdd->query($sql);
 
-        foreach($requete as $row){
-            //echo $row['id']," ";
-           // echo "<br>";
-            //$row['id'] est int(33) 最后一个id数
-        };
-        $_SESSION["id"] = $row['id'];
-        $_SESSION["pseudo"] = $pseudo;
-        //echo $row['id'];
-        header("Location: chat.php");
-    }else{
-        echo "erreur que l'on ne connaît pas";
+            foreach($requete as $row){
+                //echo $row['id']," ";
+            // echo "<br>";
+                //$row['id'] est int(33) 最后一个id数
+            };
+            $_SESSION["id"] = $row['id'];
+            $_SESSION["pseudo"] = $pseudo;
+            //echo $row['id'];
+            header("Location: chat.php");
+        }
+    } catch (PDOException $e) {
+        echo "Erreur : " . $e->getMessage();
     }
 }
 ?>
