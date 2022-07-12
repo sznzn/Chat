@@ -74,13 +74,13 @@ if(isset($_POST["inscription"])){
 
                 <div class="row">
                     <div class="form-check col-4">
-                        <input class="form-check-input" type="radio" name="sex" id="sexfemme" value="1">
+                        <input class="form-check-input" type="radio" name="sex" id="sexfemme" value=1>
                         <label class="form-check-label" for="sexfemme">
                             Femme
                         </label>
                     </div>
                     <div class="form-check mb-3 col-4">
-                        <input class="form-check-input" type="radio" name="sex" id="sexhomme" value="2">
+                        <input class="form-check-input" type="radio" name="sex" id="sexhomme" value=2>
                         <label class="form-check-label" for="sexhomme">
                             Homme
                         </label>
