@@ -10,3 +10,4 @@ on va renouveler!
 2 try -- die -- pour informer des erreurs de php 
 3 pour afficher les messages, on change php à javascript
 4 requete/prepare/excute/fetch/query
+-----------------
