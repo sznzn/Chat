@@ -11,5 +11,5 @@ on va renouveler!
 3 pour afficher les messages, on change php à javascript
 4 requete/prepare/excute/fetch/query
 
-----
+------
 
