@@ -12,4 +12,6 @@ on va renouveler!
 4 requete/prepare/excute/fetch/query
 
 ------
-
+pas fini
+1.js pour ne pas charger le page tout le temps
+2.le radio
