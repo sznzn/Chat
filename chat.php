@@ -9,7 +9,7 @@ include_once "header.php";
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
     <style>
         button{
             width: 150px;
@@ -74,35 +74,56 @@ if(session_id()!= NULL){
         </div>
             <div class="col-8 bg-secondary">
                 l'écran pour se parler
-                <div class="w-100 h-75 bg-light mb-3 overflow-auto">
+                <div id="messages" class="w-100 h-75 bg-light mb-3 overflow-auto">
                     <?php
-                    $sql = "SELECT * FROM mymessage";
-                    $requete = $bdd->prepare($sql);
-                    $allmsg=$requete->execute();
-                    if($allmsg){
-                        echo "on commence!";
-                    $allmsg=$requete= $bdd->query($sql);   
-                    foreach($allmsg as $chqmsg){
-                        
-                        echo "<p>".$chqmsg["nom"]." : ". $chqmsg["msg"]." : ".$chqmsg["time_message"]."</p> ";
-                        
-                    }
-                }
+                        // $sql = "SELECT * FROM mymessage";
+                        // $allmsg = $bdd->query($sql);   
+                        // if($allmsg){
+                        //     echo "on commence!";       
+                        //     foreach($allmsg as $chqmsg){
+                        //         echo "<p>".$chqmsg["nom"]." : ". $chqmsg["msg"]." : ".$chqmsg["time_message"]."</p> ";    
+                        //     }
+                        // }
                     ?>
                 </div>
-                <form action="" method="POST">
+                <!-- <form action="" method="POST"> -->
                     <div class="w-100 h-10 row justify-content-around">
                     
                         <input  class="col-8  bg-light" type="text" name="msg" placeholder="parler ici">
                     
-                        <button type="submit" class="col-2 btn btn-warning" name="envoyer">
+                        <button type="submit" class="col-2 btn btn-warning" name="envoyer" id="envoyer">
                         envoyer
                         </button>
                     </div>
-                </form>
+                <!-- </form> -->
             </div>
         </div>
     </main>
+    <script>
+
+        document.querySelector("#envoyer").addEventListener("click", function(){
+            alert("click");
+        });
+        
+        // Peut être OK pour faire scroller la boîte de dialogue
+        // document.querySelector("#messages").scrollTop = document.querySelector("#messages").scrollHeight;
+
+        setInterval(function() {
+            fetch('lireMessages.php')
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(data) {
+                document.querySelector("#messages").innerHTML = data;
+            });
+
+            
+            
+            // document.querySelector("#messages").innerHTML = new Date();
+
+        }, 1000)
+
+    </script>
 </body>
 </html>
 <?php
