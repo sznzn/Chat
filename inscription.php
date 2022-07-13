@@ -18,24 +18,22 @@ if(isset($_POST["inscription"])){
     $sex=$_POST["sex"];
 
     try {
-        $sql = "INSERT INTO chat(pseudo, ville, age, sex) VALUES(?,?,?,?)";
+        $sql = "INSERT INTO chat (pseudo, ville, age, sex) VALUES (?,?,?,?)";
         $requete = $bdd->prepare($sql);
         $onparle = $requete->execute(array($pseudo, $ville, $age, $sex));
+        
         if($onparle){
             //需要修改的 怎么显示$id 
         
-            $sql="SELECT id FROM chat ";
+            $sql="SELECT MAX(id) AS id FROM chat ";
             $requete= $bdd->query($sql);
+            $row=$requete->fetch();
 
-            foreach($requete as $row){
-                //echo $row['id']," ";
-            // echo "<br>";
-                //$row['id'] est int(33) 最后一个id数
-            };
-            $_SESSION["id"] = $row['id'];
-            $_SESSION["pseudo"] = $pseudo;
-            //echo $row['id'];
-            header("Location: chat.php");
+            $_SESSION["user"]["id"] = $row['id'];
+            $_SESSION["user"]["pseudo"] = $pseudo;
+            $_SESSION["user"]["ville"] = $ville;
+
+            header("Location: index.php");
         }
     } catch (PDOException $e) {
         echo "Erreur : " . $e->getMessage();

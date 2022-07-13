@@ -1,6 +1,6 @@
-<?php
-include_once "header.php";
-?>
+<?php include_once "header.php"; ?>
+<?php include_once "securite.php"; ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,6 +14,11 @@ include_once "header.php";
         button{
             width: 150px;
         }
+        #messages   {
+            max-height: 300px;
+            overflow-y: scroll;
+            scroll-behavior: smooth;
+        } 
     </style>
     <title>Page chat</title>
 </head>
@@ -22,10 +27,10 @@ include_once "header.php";
     <header>
         <ul class="nav nav-pills nav-fill">
             <li class="nav-item border border-primary">
-                <button class="nav-link" aria-current="pseudo" name="personne" ><?php echo "Bienvenu! ".$_SESSION["pseudo"]; ?></button>
+                <button class="nav-link" aria-current="pseudo" name="personne" ><?php echo (isset($_SESSION["user"]["pseudo"])? "Bienvenue! ".$_SESSION["user"]["pseudo"]:""); ?></button>
             </li>
             <li class="nav-item border border-warning">
-                <a class="nav-link" href="chat.php?action=deconnexion&id=<?=$_SESSION['id'];?>">deconnexion</a>
+                <a class="nav-link" href="index.php?action=deconnexion&id=<?=(isset($_SESSION["user"]['id'])?$_SESSION["user"]["id"]:0);?>">deconnexion</a>
             </li>
         </ul>
     </header>
@@ -55,7 +60,7 @@ if(session_id()!= NULL){
     
     
     //offre des based des données dans le mySql
-    //ouvrir un nouveau site chat.php
+    //ouvrir un nouveau site index.php
     // on parle ici
     
     
@@ -114,15 +119,15 @@ if(session_id()!= NULL){
             const option = {
                 method: "POST",
                 body: formData,
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded"
-                }
+                // headers: {
+                //     "Content-Type": "multipart/form-data"
+                // }
             };
-            fetch("lireMessages.php", option)
+            fetch("ecrireMessages.php", option)
                 .then(response => response.text()
                 )
                 .then(data =>{
-                console.log(data)
+                    console.log(data)
                 });
         });
         
@@ -130,20 +135,18 @@ if(session_id()!= NULL){
         // Peut être OK pour faire scroller la boîte de dialogue
         // document.querySelector("#messages").scrollTop = document.querySelector("#messages").scrollHeight;
 
-        // setInterval(function() {
-        //     fetch('lireMessages.php')
-        //     .then(function(response) {
-        //         return response.json();
-        //     })
-        //     .then(function(data) {
-        //         document.querySelector("#messages").innerHTML = data;
-        //     });
+        setInterval(function() {
+            fetch('lireMessages.php')
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(data) {
+                document.querySelector("#messages").innerHTML = data;
+                document.querySelector('#messages').scrollTop = document.querySelector('#messages').scrollHeight
+            });
 
-            
-            
-            // document.querySelector("#messages").innerHTML = new Date();
 
-        //}, 1000)
+        }, 1000)
 
     </script>
 </body>
