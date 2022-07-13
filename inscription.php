@@ -86,8 +86,8 @@ if(isset($_POST["inscription"])){
                         </label>
                     </div> 
                     <div class="form-check mb-3 col-3">
-                        <input class="form-check-input" type="radio" name="sex" id="sexpas" value= 0 >
-                        <label class="form-check-label" for="sexpas">
+                        <input class="form-check-input" type="radio" name="sex" id="sexpas" value= 0 checked>
+                        <label class="form-check-label" for="sexpas" >
                             Ne dit pas
                         </label>
                     </div>

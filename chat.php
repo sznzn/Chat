@@ -86,63 +86,70 @@ if(session_id()!= NULL){
                         // }
                     ?>
                 </div>
-                <!-- <form action="" method="POST"> -->
+                
                     <div class="w-100 h-10 row justify-content-around">
                     
-                        <input  class="col-8  bg-light" type="text" name="msg" placeholder="parler ici">
+                        <input id="sentMsg" class="col-8  bg-light" type="text" name="sentMsg" placeholder="parler ici">
                     
-                        <button type="submit" class="col-2 btn btn-warning" name="envoyer" id="envoyer">
+                        <button class="col-2 btn btn-warning" name="envoyer" id="envoyer">
                         envoyer
                         </button>
                     </div>
-                <!-- </form> -->
+                
             </div>
         </div>
     </main>
     <script>
-
+        
+        
         document.querySelector("#envoyer").addEventListener("click", function(){
-            alert("click");
+            const dialogue = document.querySelector("#sentMsg").value;
+            if(dialogue.length == 0){
+                
+                alert("vous n'avez rien écrit");
+            }
+            const formData = new FormData();
+            formData.append("sentMsg", dialogue);
+
+            const option = {
+                method: "POST",
+                body: formData,
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                }
+            };
+            fetch("lireMessages.php", option)
+                .then(response => response.text()
+                )
+                .then(data =>{
+                console.log(data)
+                });
         });
         
+    
         // Peut être OK pour faire scroller la boîte de dialogue
         // document.querySelector("#messages").scrollTop = document.querySelector("#messages").scrollHeight;
 
-        setInterval(function() {
-            fetch('lireMessages.php')
-            .then(function(response) {
-                return response.json();
-            })
-            .then(function(data) {
-                document.querySelector("#messages").innerHTML = data;
-            });
+        // setInterval(function() {
+        //     fetch('lireMessages.php')
+        //     .then(function(response) {
+        //         return response.json();
+        //     })
+        //     .then(function(data) {
+        //         document.querySelector("#messages").innerHTML = data;
+        //     });
 
             
             
             // document.querySelector("#messages").innerHTML = new Date();
 
-        }, 1000)
+        //}, 1000)
 
     </script>
 </body>
 </html>
 <?php
-if(isset($_POST["envoyer"])&&(!empty($_POST["msg"]))){
-    
-    $nom = $_SESSION["pseudo"];
-    $msg = htmlspecialchars($_POST["msg"]);
-    $sql = "INSERT INTO mymessage(nom, msg, time_message) VALUES(?, ?, NOW())";
-    $requete = $bdd->prepare($sql);
-    $notreMsg=$requete->execute(array($nom, $msg));
-    
-    if($notreMsg){
-        echo "envoyé";  
-        header("Location: chat.php");
-        }else{
-            echo "problème";
-        }
 
-}
 ?>
 
 

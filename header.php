@@ -1,7 +1,7 @@
 <?php
-$dsn = 'mysql:dbname=chatlt;host=localhost';
+$dsn = 'mysql:dbname=tpphilippe;host=localhost';
 $user = 'root';
-$password = '';
+$password = 'root';
 try {
     $bdd = new PDO($dsn, $user, $password, array(PDO::ATTR_ERRMODE => PDO:: ERRMODE_EXCEPTION));
 } catch (PDOException $e) {
